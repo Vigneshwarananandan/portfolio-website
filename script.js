@@ -72,3 +72,30 @@ window.addEventListener("scroll", () => {
 scrollTopBtn.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
 });
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener("click", function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth"
+        });
+    });
+});
+const projectCards = document.querySelectorAll(".project-card");
+
+const fadeInOnScroll = () => {
+    projectCards.forEach(card => {
+        const cardPosition = card.getBoundingClientRect().top;
+        const screenPosition = window.innerHeight / 1.3;
+
+        if (cardPosition < screenPosition) {
+            card.classList.add("show");
+        }
+    });
+};
+
+window.addEventListener("scroll", fadeInOnScroll);
+const toggleBtn = document.getElementById("theme-toggle");
+toggleBtn.addEventListener("click", () => {
+    document.body.classList.toggle("light-mode");
+    toggleBtn.textContent = document.body.classList.contains("light-mode") ? "🌞 Light Mode" : "🌙 Dark Mode";
+});
